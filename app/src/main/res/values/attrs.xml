@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StarRating">
+        <attr name="numOfStars" format="integer"/>
+        <attr name="level" format="float"/>
+        <attr name="shapeColor" format="color"/>
+        <attr name="coreColor" format="color"/>
+        <attr name="gap" format="integer"/>
+        <attr name="shapeStrokeWidth" format="integer"/>
+    </declare-styleable>
+    <declare-styleable name="BottomHanger">
+        <attr name="mainPaint" format="color"/>
+    </declare-styleable>
+</resources>

@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">MyAwesomeStore</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="big_banner_main_page">Big banner</string>
+    <string name="sale_header_main_page">Sale</string>
+    <string name="new_product_main_page">New</string>
+    <string name="product_photo_content_description">product photo</string>
+    <string name="sale_price_template"><font color='#9B9B9B'><strike>100$</strike></font><font color='#DB3022'> 90$</font></string>
+    <string name="bottom_toolbar_home">Home</string>
+    <string name="bottom_toolbar_shop">Shop</string>
+    <string name="bottom_toolbar_bag">Bag</string>
+    <string name="bottom_toolbar_favorites">Favorites</string>
+    <string name="bottom_toolbar_profile">Profile</string>
+    <string name="categories_header">Categories</string>
+    <string name="menu_search">Search</string>
+    <string name="categorie_description">Categorie image</string>
+    <string name="women_categorie_header">Women</string>
+    <string name="kids_categorie_header">Kids</string>
+    <string name="men_categorie_header">Men</string>
+    <string name="main_shared_bottom_toolbar">Shared bottom toolbar in Main fragment</string>
+    <string name="categories_shared_bottom_toolbar">Shared bottom toolbar in Categories fragment</string>
 </resources>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?android:colorControlHighlight"
+    android:enterFadeDuration="@android:integer/config_shortAnimTime"
+    android:exitFadeDuration="@android:integer/config_shortAnimTime">
+    <item>
+        <selector>
+            <item
+                android:state_checked="true"
+                android:state_pressed="false">
+                <layer-list>
+                    <item
+                        android:width="36dp"
+                        android:height="36dp">
+                        <shape android:shape="oval">
+                            <solid android:color="@color/white" />
+                        </shape>
+                    </item>
+                    <item
+                        android:width="24dp"
+                        android:height="24dp"
+                        android:drawable="@drawable/ic_add_to_favorites_activated"
+                        android:gravity="center" />
+                </layer-list>
+            </item>
+            <item
+                android:state_checked="true"
+                android:state_pressed="true">
+                <layer-list>
+                    <item
+                        android:width="36dp"
+                        android:height="36dp">
+                        <shape android:shape="oval">
+                            <solid android:color="@color/sale" />
+                        </shape>
+                    </item>
+                    <item
+                        android:width="24dp"
+                        android:height="24dp"
+                        android:drawable="@drawable/ic_add_to_favorites_pressed"
+                        android:gravity="center" />
+                </layer-list>
+            </item>
+            <item
+                android:state_checked="false"
+                android:state_pressed="true">
+                <layer-list>
+                    <item
+                        android:width="36dp"
+                        android:height="36dp">
+                        <shape android:shape="oval">
+                            <solid android:color="@color/sale" />
+                        </shape>
+                    </item>
+                    <item
+                        android:width="24dp"
+                        android:height="24dp"
+                        android:drawable="@drawable/ic_add_to_favorites_pressed"
+                        android:gravity="center" />
+                </layer-list>
+            </item>
+            <item>
+                <layer-list>
+                    <item
+                        android:width="36dp"
+                        android:height="36dp">
+                        <shape android:shape="oval">
+                            <solid android:color="@color/white" />
+                        </shape>
+                    </item>
+                    <item
+                        android:width="24dp"
+                        android:height="24dp"
+                        android:drawable="@drawable/ic_add_to_favorites_inactivated"
+                        android:gravity="center" />
+                </layer-list>
+            </item>
+        </selector>
+    </item>
+</ripple>

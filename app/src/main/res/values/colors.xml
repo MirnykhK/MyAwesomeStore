@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="background">#F9F9F9</color>
+    <color name="black_text">#222222</color>
+    <color name="grey_text">#9B9B9B</color>
+    <color name="sale">#DB3022</color>
+    <color name="yellow">#FFBA49</color>
+    <color name="shimmer_base">#CFCFCF</color>
+    <color name="shimmer_highlight">#ECECEC</color>
 </resources>
