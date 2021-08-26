@@ -1,6 +1,7 @@
 package ru.adminmk.myawesomestore.view.categories
 
 import android.animation.LayoutTransition
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Typeface
 import android.os.Bundle
@@ -50,9 +51,11 @@ class CategoriesFragment : ParentFragment() {
         get() = _binding!!
 
     private val categoriesAdapter by lazy {
-        ListDelegationAdapter(categorieDelegate {
-            Timber.tag("CategoriesFragment").d("click!")
-        })
+        ListDelegationAdapter(
+            categorieDelegate {
+                Timber.tag("CategoriesFragment").d("click!")
+            }
+        )
     }
     private val categoriesShimmerAdapter by lazy { ListDelegationAdapter(categorieShimmerDelegate()) }
 
@@ -107,6 +110,7 @@ class CategoriesFragment : ParentFragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun initMainData() {
         localViewModel.isDataAvailable.observe(
             viewLifecycleOwner,
@@ -116,6 +120,7 @@ class CategoriesFragment : ParentFragment() {
                 localViewModel.remoteData.value?.let {
                     initSaleBttn(it.saleCategorie)
                     categoriesAdapter.items = it.mainCategories
+                    categoriesAdapter.notifyDataSetChanged() // for sketch only
                 }
             }
         )
@@ -309,12 +314,19 @@ class CategoriesFragment : ParentFragment() {
 
     private fun setupTopMargin() {
         if (isSavedStateLaunch) {
-            localViewModel.statusBarHeightMediatorLiveData.observe(
-                viewLifecycleOwner,
-                EventObserver {
-                    (binding.root.layoutParams as FrameLayout.LayoutParams).topMargin = it
+
+            activity?.let {
+                if (it is HostContract) {
+                    with(it) {
+                        obtainHostViewModel().statusBarHeight.observe(
+                            viewLifecycleOwner,
+                            EventObserver {
+                                (binding.root.layoutParams as FrameLayout.LayoutParams).topMargin = it
+                            }
+                        )
+                    }
                 }
-            )
+            }
         } else {
             activity?.let { fragmentActivity ->
                 (fragmentActivity as HostContract).apply {

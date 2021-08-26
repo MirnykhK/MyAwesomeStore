@@ -31,20 +31,6 @@ abstract class ParentFragment : DaggerFragment() {
         }
     }
 
-    override fun onDetach() {
-        super.onDetach()
-
-        activity?.let {
-            (it as HostContract).apply {
-                obtainHostViewModel().apply {
-                    localViewModel.navigationStateMediatorLiveData.removeSource(navigationState)
-
-                    localViewModel.statusBarHeightMediatorLiveData.removeSource(statusBarHeight)
-                }
-            }
-        }
-    }
-
     protected fun collapseBottomToolbarOnFirstScroll(oldScrollY: Int) {
         if (!isFirstBottomToolbarScrollTookPlace && oldScrollY != 0) {
             collapseBottomToolbar()
@@ -58,29 +44,11 @@ abstract class ParentFragment : DaggerFragment() {
         }
     }
 
-    open fun doOnPreAttach(context: Context) {}
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        doOnPreAttach(context)
-
         if (context is HostContract) {
-            with(context) {
-                localViewModel.navigationStateMediatorLiveData.addSource(
-                    obtainHostViewModel().navigationState
-                ) {
-                    localViewModel.navigationStateMediatorLiveData.value = it
-                }
-
-                localViewModel.statusBarHeightMediatorLiveData.addSource(
-                    obtainHostViewModel().statusBarHeight
-                ) {
-                    localViewModel.statusBarHeightMediatorLiveData.value = it
-                }
-
-                initFragmentOnAttachToHost(context)
-            }
+            initFragmentOnAttachToHost(context)
         }
     }
 
@@ -93,16 +61,22 @@ abstract class ParentFragment : DaggerFragment() {
     }
 
     private fun setupBottomToolbar() {
-        localViewModel.navigationStateMediatorLiveData.observe(
-            viewLifecycleOwner,
-            EventObserver {
-                viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-                    selectBottomToolbarNavCommand(it)?.also {
-                        findNavController().navigate(it)
-                    }
+        activity?.let {
+            if (it is HostContract) {
+                with(it) {
+                    obtainHostViewModel().navigationState.observe(
+                        viewLifecycleOwner,
+                        EventObserver {
+                            viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+                                selectBottomToolbarNavCommand(it)?.also {
+                                    findNavController().navigate(it)
+                                }
+                            }
+                        }
+                    )
                 }
             }
-        )
+        }
     }
 
     protected abstract fun selectBottomToolbarNavCommand(fragmentDestinationId: Int): NavDirections?

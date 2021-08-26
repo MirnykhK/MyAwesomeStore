@@ -25,6 +25,6 @@ class CategoriesLoaderViewModel @Inject constructor(
         localSettingsRepository.saveTopCategory(topCategorie)
     }
 
-    override suspend fun getRemoteData(): Result<CategoriesRemoteAnswer>
-        =  remoteDataRepository.getCategoriesData()
+    override suspend fun getRemoteData(): Result<CategoriesRemoteAnswer> =
+        remoteDataRepository.getCategoriesData()
 }

@@ -1,16 +1,15 @@
 package ru.adminmk.myawesomestore.view.main_page
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.core.view.*
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
 import androidx.navigation.NavDirections
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.savedstate.SavedStateRegistryOwner
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import ru.adminmk.myawesomestore.R
 import ru.adminmk.myawesomestore.databinding.FragmentMainBinding
@@ -20,7 +19,6 @@ import ru.adminmk.myawesomestore.view.HostContract
 import ru.adminmk.myawesomestore.view.ParentFragment
 import ru.adminmk.myawesomestore.viewmodel.main_page.MainFragmentViewModel
 import ru.adminmk.myawesomestore.viewmodel.main_page.MainPageViewModelSavedStateFactory
-import timber.log.Timber
 import javax.inject.Inject
 
 class MainFragment : ParentFragment() {
@@ -36,11 +34,8 @@ class MainFragment : ParentFragment() {
     @Inject
     lateinit var viewModelSavedStateProviderFactory: MainPageViewModelSavedStateFactory.ProviderFactory
 
-    private lateinit var localViewModelProvider: MainPageViewModelSavedStateFactory
-    private lateinit var viewModelStoreOwner: ViewModelStoreOwner
-
-    override val localViewModel by viewModels<MainFragmentViewModel> ({ viewModelStoreOwner }) {
-        localViewModelProvider
+    override val localViewModel: MainFragmentViewModel by viewModels {
+        viewModelSavedStateProviderFactory.create(this)
     }
 
     override fun onCreateView(
@@ -50,13 +45,6 @@ class MainFragment : ParentFragment() {
     ): View? {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         return _binding?.root
-    }
-
-    override fun doOnPreAttach(context: Context) {
-        if (context is FragmentActivity) {
-            localViewModelProvider = viewModelSavedStateProviderFactory.create(context)
-            viewModelStoreOwner = context
-        }
     }
 
     override fun onDestroyView() {
@@ -106,30 +94,29 @@ class MainFragment : ParentFragment() {
         initMainData()
     }
 
+    @SuppressLint("NotifyDataSetChanged") // for sketch only
     private fun initMainData() {
         localViewModel.isDataAvailable.observe(
             viewLifecycleOwner,
             Observer
             { isDataAvailable ->
                 if (isDataAvailable) {
-
-
                     val bigBanner = localViewModel.getBigBanner()
 
-                    binding.bigBannerImageView.setImageDrawable(bigBanner.pic)
+                    binding.bigBannerImageView.setImageDrawable(
+                        ContextCompat.getDrawable(requireContext(), bigBanner.pic)!!
+                    )
                     binding.bigBannerTextView.text = bigBanner.text
 
                     binding.saleContainer.contentTextView.text = localViewModel.getSaleContentString()
                     saleDelegateAdapter.items = localViewModel.getListOSaleItems()
+                    saleDelegateAdapter.notifyDataSetChanged()
                     binding.saleContainer.productRecycler.isVisible = saleDelegateAdapter.items.size > 0
 
                     newDelegateAdapter.items = localViewModel.getListONewItems()
+                    newDelegateAdapter.notifyDataSetChanged()
                     binding.newContainer.productRecycler.isVisible = newDelegateAdapter.items.size > 0
                     binding.newContainer.contentTextView.text = localViewModel.getNewContentString()
-
-
-                    Timber.d("items ${saleDelegateAdapter.items.size}")
-                    Timber.d("is visible ${binding.saleContainer.productRecycler.isVisible}")
 
                     if (true) {
                         // backstack is not clear - it is not launch
@@ -144,6 +131,12 @@ class MainFragment : ParentFragment() {
                 }
             }
         )
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        localViewModel.saveCache(outState)
     }
 
     private fun initSaleRecycler() {

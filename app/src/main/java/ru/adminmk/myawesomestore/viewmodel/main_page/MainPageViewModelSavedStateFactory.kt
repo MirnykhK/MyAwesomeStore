@@ -9,7 +9,6 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import ru.adminmk.myawesomestore.repositories.remote_data.RemoteDataContract
-import ru.adminmk.myawesomestore.viewmodel.host.HostViewModel
 
 class MainPageViewModelSavedStateFactory @AssistedInject constructor(
     private val remoteDataRepository: RemoteDataContract,
@@ -30,7 +29,6 @@ class MainPageViewModelSavedStateFactory @AssistedInject constructor(
         modelClass: Class<T>,
         handle: SavedStateHandle
     ): T {
-
         @Suppress("UNCHECKED_CAST")
         return MainFragmentViewModel(
             handle,

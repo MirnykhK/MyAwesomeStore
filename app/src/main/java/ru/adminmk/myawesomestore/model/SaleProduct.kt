@@ -38,7 +38,7 @@ class Product(
     brand: String,
     name: String,
     val isNew: Boolean,
-    val Price: Int
+    val price: Int
 ) : Item(rating, ratingReviews, brand, name) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -46,19 +46,19 @@ class Product(
         if (!super.equals(other)) return false
 
         if (isNew != other.isNew) return false
-        if (Price != other.Price) return false
+        if (price != other.price) return false
 
         return true
     }
 
     override fun hashCode(): Int {
         var result = super.hashCode()
-        result = 31 * result + Price
+        result = 31 * result + price
         return result
     }
 
     override fun toString(): String {
-        return "${super.toString()} Product(isNew=$isNew, Price=$Price)"
+        return "${super.toString()} Product(isNew=$isNew, Price=$price)"
     }
 }
 

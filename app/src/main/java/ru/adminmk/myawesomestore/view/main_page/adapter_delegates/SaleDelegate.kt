@@ -64,7 +64,7 @@ private fun makeBinding(
             } else {
                 binding.salePercentView.visibility = View.GONE
             }
-            binding.priceTextView.text = String.format("%d\$", item.Price)
+            binding.priceTextView.text = String.format("%d\$", item.price)
             binding.priceTextView.setTextColor(ContextCompat.getColor(context, R.color.black_text))
         }
         is Sale -> {

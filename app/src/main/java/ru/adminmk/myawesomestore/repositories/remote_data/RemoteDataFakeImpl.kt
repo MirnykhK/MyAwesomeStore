@@ -11,8 +11,8 @@ class RemoteDataFakeImpl @Inject constructor(private val context: Context) : Rem
 
     private var cacheCategoriesRemoteAnswer: CategoriesRemoteAnswer? = null
 
-    override fun getCacheCategoriesRemoteAnswer(): CategoriesRemoteAnswer?
-        = cacheCategoriesRemoteAnswer
+    override fun getCacheCategoriesRemoteAnswer(): CategoriesRemoteAnswer? =
+        cacheCategoriesRemoteAnswer
 
     private var cacheMainPageRemoteAnswer: MainPageRemoteAnswer? = null
 
@@ -91,31 +91,52 @@ class RemoteDataFakeImpl @Inject constructor(private val context: Context) : Rem
 
     private fun getListOSaleItems() =
         listOf(
-            Sale(10, 4.2f, 10,
-                "Dorothy Perkins", "Evening Dress", 15, 12),
-            Sale(15, 5f, 199,
-                "Dorothy Perkins1", "Evening Dress123", 1100, 1002),
-            Sale(20, 2f, 0,
-                "Dorothy Perkins2", "Evening Dress234", 15, 12),
-            Sale(25, 0f, 0,
-                "Dorothy Perkins3", "Evening Dress345", 15, 12)
+            Sale(
+                10, 4.2f, 10,
+                "Dorothy Perkins", "Evening Dress", 15, 12
+            ),
+            Sale(
+                15, 5f, 199,
+                "Dorothy Perkins1", "Evening Dress123", 1100, 1002
+            ),
+            Sale(
+                20, 2f, 0,
+                "Dorothy Perkins2", "Evening Dress234", 15, 12
+            ),
+            Sale(
+                25, 0f, 0,
+                "Dorothy Perkins3", "Evening Dress345", 15, 12
+            )
         )
 
     private fun getListONewItems() =
         listOf(
-            Product(4.2f, 10,
-                "Dorothy Perkins", "Evening Dress", true, 103),
-            Product(5f, 199,
-                "Dorothy Perkins1", "Evening Dress123", true, 22),
-            Product(2f, 0,
-                "Dorothy Perkins2", "Evening Dress234", true, 44),
-            Product(0f, 0,
-                "Dorothy Perkins3", "Evening Dress345", true, 46)
+            Product(
+                4.2f, 10,
+                "Dorothy Perkins", "Evening Dress", true, 103
+            ),
+            Product(
+                5f, 199,
+                "Dorothy Perkins1", "Evening Dress123", true, 22
+            ),
+            Product(
+                2f, 0,
+                "Dorothy Perkins2", "Evening Dress234", true, 44
+            ),
+            Product(
+                0f, 0,
+                "Dorothy Perkins3", "Evening Dress345", true, 46
+            )
         )
 
     private fun getSaleContentString() = "Super summer sale"
     private fun getNewContentString() = "You’ve never seen it before!"
 
-    private fun getBigBanner() = BigBanner("Fashion sale", false,
-        ContextCompat.getDrawable(context, R.drawable.big_banner)!!)
+    private fun getBigBanner() = BigBanner(
+        "Fashion sale", false, R.drawable.big_banner
+    )
+
+    override fun setCacheMainPageRemoteAnswer(cacheMainPageRemoteAnswer: MainPageRemoteAnswer) {
+        this.cacheMainPageRemoteAnswer = cacheMainPageRemoteAnswer
+    }
 }

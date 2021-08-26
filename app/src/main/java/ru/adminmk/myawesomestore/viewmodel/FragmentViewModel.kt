@@ -6,14 +6,12 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ru.adminmk.myawesomestore.model.Result
+import timber.log.Timber
 
-abstract class  FragmentViewModel<T> : ViewModel() {
-    val navigationStateMediatorLiveData = MediatorLiveData<Event<Int>>()
-    val statusBarHeightMediatorLiveData = MediatorLiveData<Event<Int>>()
-
+abstract class FragmentViewModel<T> : ViewModel() {
     var job: Job? = null
 
-    private val _isDataAvailable = MutableLiveData<Boolean>()
+    protected val _isDataAvailable = MutableLiveData<Boolean>()
     val isDataAvailable: LiveData<Boolean> = _isDataAvailable
 
     private val _remoteData = MutableLiveData<T?>()
@@ -22,7 +20,7 @@ abstract class  FragmentViewModel<T> : ViewModel() {
     protected val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    fun loadRemoteData (forceRefresh: Boolean = false) {
+    fun loadRemoteData(forceRefresh: Boolean = false) {
         if (_isDataAvailable.value == true && !forceRefresh || _dataLoading.value == true) {
             return
         }
@@ -48,6 +46,7 @@ abstract class  FragmentViewModel<T> : ViewModel() {
 
     protected fun setRemoteData(remoteData: T?) {
         this._remoteData.value = remoteData
+        Timber.d("setRemoteData")
         _isDataAvailable.value = remoteData != null
     }
 
@@ -57,6 +56,7 @@ abstract class  FragmentViewModel<T> : ViewModel() {
 
     private fun onDataNotAvailable(result: Result<T>) {
         _remoteData.value = null
+        Timber.d("onDataNotAvailable")
         _isDataAvailable.value = false
     }
 

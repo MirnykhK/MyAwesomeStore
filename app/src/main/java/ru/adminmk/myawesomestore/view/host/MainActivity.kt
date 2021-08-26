@@ -20,7 +20,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.android.support.DaggerAppCompatActivity
 import ru.adminmk.myawesomestore.R
 import ru.adminmk.myawesomestore.viewmodel.host.HostViewModel
-import timber.log.Timber
 
 class MainActivity : DaggerAppCompatActivity(), HostContract {
 
@@ -89,10 +88,9 @@ class MainActivity : DaggerAppCompatActivity(), HostContract {
 
         with(binding.fragmentContainer.id) {
             (supportFragmentManager.findFragmentById(this) as NavHostFragment).apply {
-                this.navController.addOnDestinationChangedListener {
-                        _,
-                        destination: NavDestination,
-                        _ ->
+                this.navController.addOnDestinationChangedListener { _,
+                    destination: NavDestination,
+                    _ ->
                     when (destination.id) {
                         R.id.mainFragment -> binding.bottomContainer.bttnHome.isChecked = true
                         R.id.categoriesFragment -> binding.bottomContainer.bttnShop.isChecked = true
@@ -187,7 +185,6 @@ class MainActivity : DaggerAppCompatActivity(), HostContract {
     override fun obtainHostViewModel() = hostViewModel
 
     override fun setupHostStatusBarTheme(isLight: Boolean) {
-        Timber.tag("MainActivity").d("setupHostStatusBarTheme: $isLight")
         setupStatusBarTheme(isLight)
     }
 

@@ -28,7 +28,7 @@ class LocalSettingsImpl @Inject constructor(private val context: Context) : Loca
     override fun getTopCategory(): TopCategorie {
         return sharedPreferences.getInt(TOP_CATEGORIE, -1).run {
             when (this) {
-                -1 ->  TopCategorie.WOMEN
+                -1 -> TopCategorie.WOMEN
                 else -> TopCategorie.values().get(this)
             }
         }
